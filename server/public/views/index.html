@@ -3,17 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>Open Sesame</title>
-    <script src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyArO1n-5w8xxPblR_aDxV6Ul1VLik3_pRY"></script>
+    <script src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyArO1n-5w8xxPblR_aDxV6Ul1VLik3_pRY&libraries=places"></script>
     <script src = "vendors/angular/angular.min.js"></script>
 
     <script src = "assets/scripts/composite.all.min.js"></script>
     <link rel = "stylesheet" href = "assets/styles/style.css" />
   </head>
-  <body ng-controller = "MainController">
+  <body ng-controller = "MainController as main">
     <h1>Is it open?</h1>
 
     <!-- <button ng-click = ""></button> -->
-    <div id = "googleMap" style = "width:50"></div>
+    <div id = "googleMap"></div>
+    <form>
+      <input type = "text" ng-model = "main.zipcode"/>
+      <input type = "submit" ng-click = "main.enterZip()" />
+    </form>
 
   </body>
 </html>
