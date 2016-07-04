@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = "openApp">
   <head>
     <meta charset="utf-8">
-    <title>Oliver's Blogging Engine</title>
+    <title>Open Sesame</title>
+    <script src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyArO1n-5w8xxPblR_aDxV6Ul1VLik3_pRY"></script>
+    <script src = "vendors/angular/angular.min.js"></script>
+
+    <script src = "assets/scripts/composite.all.min.js"></script>
+    <link rel = "stylesheet" href = "assets/styles/style.css" />
   </head>
-  <body>
-    <h1>Oliver's Blog</h1>
+  <body ng-controller = "MainController">
+    <h1>Is it open?</h1>
+
+    <!-- <button ng-click = ""></button> -->
+    <div id = "googleMap" style = "width:50"></div>
 
   </body>
 </html>

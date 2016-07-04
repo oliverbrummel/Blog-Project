@@ -1,10 +1,15 @@
 var express = require('express');
+var bodyParser = require('body-parser');
+
 
 //routes
 var indexRouter = require('./routes/index.js');
 
 var app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('server/public'));
 
 
 
