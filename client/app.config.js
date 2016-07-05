@@ -17,14 +17,52 @@ angular.module('openApp', [])
 
 
       function initialize(){
+// [[[[[[[[[[[[[[]]]]]]]]]]]]]]
+          var mapLocation = new google.maps.LatLng(vm.latitude, vm.longitude);
+
+          var openPlaces = [];
+          // var mapLocation = new google.maps.LatLng(44.999475, -93.241433);
+
           var mapProp = {
-            // center: new google.maps.LatLng(44.9778, -93.2650),
-            center: new google.maps.LatLng(vm.latitude, vm.longitude),
-            zoom: 14,
+            center: mapLocation,
+            zoom: 13,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
           var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-      }
-      // google.maps.event.addDomListener(window, 'load', initialize);
 
+          var placesRequest = {
+            location: mapLocation,
+            radius: '2000',
+            types: ['restaurant'],
+            keyword: 'restaurant',
+
+          };
+
+          var service = new google.maps.places.PlacesService(map);
+
+          service.nearbySearch(placesRequest, function(results, status) {
+            if(status == google.maps.places.PlacesServiceStatus.OK) {
+              for (var i = 0; i < results.length; i++) {
+
+                var listedHours = results[i].opening_hours;
+                if(typeof listedHours != 'undefined' && listedHours.open_now === true){
+                  openPlaces.push(results[i]);
+                  var place = results[i];
+                  console.log('place:', place);
+                  var marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                  });
+                }
+
+              }
+              console.log('openPlaces:', openPlaces);
+            }
+          })//nearbySearch
+
+
+      }
+
+
+      google.maps.event.addDomListener(window, 'load', initialize);
   }]);
