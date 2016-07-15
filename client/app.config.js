@@ -4,6 +4,8 @@ angular.module('openApp', [])
     vm.latitude;
     vm.longitude;
 
+    vm.openPlaces = [];
+    initialize();
     vm.enterZip = function(){
       $http.get('/zipcodeApi/'+ vm.zipcode)
         .then(function(response){
@@ -12,7 +14,9 @@ angular.module('openApp', [])
           console.log('vm.latitude = ',vm.latitude);
           console.log('vm.longitude = ',vm.longitude);
           initialize();
+          console.log('enterZip openPlaces:', vm.openPlaces);
         })
+        // .then(initialize());
     }
 
 
@@ -20,7 +24,7 @@ angular.module('openApp', [])
 // [[[[[[[[[[[[[[]]]]]]]]]]]]]]
           var mapLocation = new google.maps.LatLng(vm.latitude, vm.longitude);
 
-          var openPlaces = [];
+          var openNow = [];
           // var mapLocation = new google.maps.LatLng(44.999475, -93.241433);
 
           var mapProp = {
@@ -43,10 +47,9 @@ angular.module('openApp', [])
           service.nearbySearch(placesRequest, function(results, status) {
             if(status == google.maps.places.PlacesServiceStatus.OK) {
               for (var i = 0; i < results.length; i++) {
-
                 var listedHours = results[i].opening_hours;
                 if(typeof listedHours != 'undefined' && listedHours.open_now === true){
-                  openPlaces.push(results[i]);
+                  openNow.push(results[i]);
                   var place = results[i];
                   console.log('place:', place);
                   var marker = new google.maps.Marker({
@@ -54,15 +57,14 @@ angular.module('openApp', [])
                     position: place.geometry.location
                   });
                 }
-
               }
-              console.log('openPlaces:', openPlaces);
             }
-          })//nearbySearch
+            console.log('openNow:', openNow);
 
+            vm.openPlaces = openNow;
+            console.log('after vm.openPlaces:', vm.openPlaces);
+          })//closes nearbySearch()
 
       }
-
-
-      google.maps.event.addDomListener(window, 'load', initialize);
+      // google.maps.event.addDomListener(window, 'load', initialize);
   }]);
